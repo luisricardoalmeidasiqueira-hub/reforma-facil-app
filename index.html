@@ -116,12 +116,15 @@ textarea{min-height:82px;resize:vertical}
   <div id="readingList"></div>
   <button class="secondary" id="addReading" type="button">＋ Adicionar leitura</button>
 
-  <label>Situação <span class="req">*</span></label>
-  <div class="situation">
-    <button type="button" data-sit="Travado">Travado</button>
-    <button type="button" data-sit="Desligado">Desligado</button>
-    <button type="button" data-sit="Avariado">Avariado</button>
-  </div>
+  <label for="situacao">Situação <span class="req">*</span></label>
+  <select id="situacao">
+    <option value="">Selecione a situação</option>
+    <option value="Travado">Travado</option>
+    <option value="Desligado">Desligado</option>
+    <option value="Avariado">Avariado</option>
+    <option value="Medidor caído">Medidor caído</option>
+    <option value="Necessita tábua de fixação">Necessita tábua de fixação</option>
+  </select>
 
   <label for="data">Data</label>
   <input id="data" type="date">
@@ -222,7 +225,7 @@ function renderReadings(){
 }
 function setSituation(v){
   selectedSituacao=v;
-  document.querySelectorAll('[data-sit]').forEach(b=>b.classList.toggle('active',b.dataset.sit===v));
+  $('situacao').value=v||'';
 }
 function renderPhotos(){
   $('previews').innerHTML=selectedFotos.map(src=>`<img src="${src}" alt="Foto adicionada">`).join('');
@@ -316,7 +319,7 @@ function exportCSV(){
 $('etapa').addEventListener('change',e=>{stage=Number(e.target.value);renderRecords()});
 $('prevStage').onclick=()=>{stage=stage<=1?18:stage-1;$('etapa').value=stage;renderRecords()};
 $('nextStage').onclick=()=>{stage=stage>=18?1:stage+1;$('etapa').value=stage;renderRecords()};
-document.querySelectorAll('[data-sit]').forEach(b=>b.onclick=()=>setSituation(b.dataset.sit));
+$('situacao').addEventListener('change',e=>setSituation(e.target.value));
 $('addReading').onclick=()=>{readings.push('');renderReadings()};
 $('photoBtn').onclick=()=>$('photoInput').click();
 $('photoInput').onchange=e=>addPhotos(e.target.files);
