@@ -213,6 +213,9 @@ footer b{color:var(--ink)}
 .ex{font-size:10px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:2px}
 @media (prefers-reduced-motion: no-preference){.sheet .box{animation:up .2s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 /* ===== modo compacto (pílulas) ===== */
+.pacoes{margin-left:auto;display:flex;gap:6px;flex:0 0 auto}
+.pacoes .ic{width:34px;height:34px;padding:0;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);color:var(--denim-ink)}
+.olanome{flex:1 1 auto}
 header.top{padding-block:10px 0}
 .perfil{margin-bottom:6px;gap:10px}
 .perfil .foto{width:42px;height:42px;border-width:2px}
@@ -476,7 +479,8 @@ const nomeP=()=>(D.perfil&&D.perfil.nome)||"";
 function desenhaPerfil(){
  const el=$("#perfil");if(!el)return;
  el.innerHTML=`<button class="foto" onclick="abrirFoto()" aria-label="Mudar a foto"><img src="${D.perfil.foto||FOTO_PADRAO}" alt="Foto de ${esc(nomeP())}"><span class="cam">📷</span></button>
- <button class="olanome" onclick="abrirNome()" aria-label="Mudar o nome">Olá, <b>${esc(nomeP())||"toque para pôr seu nome"}</b>! <span class="lapis">✏️</span></button>`;
+ <button class="olanome" onclick="abrirNome()" aria-label="Mudar o nome">Olá, <b>${esc(nomeP())||"toque para pôr seu nome"}</b>! <span class="lapis">✏️</span></button>
+ <div class="pacoes"><button class="ic" aria-label="Compartilhar aplicativo" title="Compartilhar aplicativo" onclick="compartilhar()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg></button><button class="ic" aria-label="Atualizar aplicativo" title="Atualizar aplicativo" onclick="atualizar()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button></div>`;
 }
 function abrirNome(){
  folha("✏️ Seu nome",`<p class="hint">Escreva o seu nome e toque em <b>💾 Salvar</b>.</p>
@@ -900,7 +904,7 @@ function fazerAgora(k){
 function tiraGuia(){$("#guia")?.remove();document.querySelectorAll(".alvo").forEach(e=>e.classList.remove("alvo"))}
 
 const DICAS={
- inicio:"Aqui é o resumo do dia.<br>Lá em cima: toque na <b>foto 📷</b> para trocar a foto, ou no <b>nome ✏️</b> para mudar o nome.<br>Para anotar uma roupa nova, toque no botão amarelo <b>+ Novo pedido</b>.<br>Lá em cima, toque em <b>Loja</b>, <b>Carroção</b> ou <b>Particular</b> para ver só os pedidos de cada lugar.<br>O lápis <b>✏️</b> muda os nomes.",
+ inicio:"Aqui é o resumo do dia.<br>Ao lado do seu nome: o primeiro botão <b>compartilha</b> o app e o segundo <b>atualiza</b>.<br>Lá em cima: toque na <b>foto 📷</b> para trocar a foto, ou no <b>nome ✏️</b> para mudar o nome.<br>Para anotar uma roupa nova, toque no botão amarelo <b>+ Novo pedido</b>.<br>Lá em cima, toque em <b>Loja</b>, <b>Carroção</b> ou <b>Particular</b> para ver só os pedidos de cada lugar.<br>O lápis <b>✏️</b> muda os nomes.",
  pedidos:"Aqui ficam todas as roupas.<br>Toque no <b>botão azul</b> quando a peça mudar: começou, ficou pronta ou foi entregue.<br><b>💵 Receber</b> anota o dinheiro. <b>Editar</b> corrige. A <b>lixeira</b> apaga.",
  servicos:"Aqui ficam os seus preços.<br>Mudou um preço? Escreva o novo valor e toque em <b>💾 Salvar</b>.",
  caixa:"Aqui é o seu dinheiro do mês.<br>Mostra quanto <b>entrou</b>, quanto <b>gastou</b> e quanto <b>sobrou</b>.<br>Também mostra <b>quem está devendo</b>.",
